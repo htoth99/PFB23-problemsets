@@ -1,0 +1,12 @@
+  195  git push
+  196  cat > never
+  198  git add never
+  199  git reset never
+  200  git status
+  201  git restore cancer_genes.fasta
+  203  git status
+  204  git reset never
+  205  git status
+  206  man rm
+  207  man cp
+  208  history
