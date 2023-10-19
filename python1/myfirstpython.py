@@ -12,3 +12,5 @@ print('My name is',name,'and my favorite color is',color,'I like to go to the',a
 #activity = 'my favorite activity is going to the greenhouse'
 #print(activity)
 #print('my favorite animal is a zebra')
+
+
