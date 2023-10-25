@@ -1,3 +1,10 @@
 NGS-workshop//gatk-4.3.0.0.zip
 NGS-workshop//gatk-4.3.0.0/gatk-package-4.3.0.0-local.jar
 NGS-workshop//gatk-4.3.0.0/gatk-package-4.3.0.0-spark.jar
+NGS-workshop//gatk-4.3.0.0.zip
+NGS-workshop//gatk-4.3.0.0/gatk-package-4.3.0.0-local.jar
+NGS-workshop//gatk-4.3.0.0/gatk-package-4.3.0.0-spark.jar
+genome-assembly//ecoli-pacbio/ecoli.seqStore/blobs.0003
+genome-assembly//ecoli-pacbio/unitigging/ecoli.ctgStore/partition.0001
+genome-assembly//filtered_0.75.fastq
+genome-assembly//pacbio.fastq

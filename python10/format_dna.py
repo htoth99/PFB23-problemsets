@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+import re
+import sys
+
+dna_INPUT = 'AGTGGGGGGGGGGGGGGGGGGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTCCCCCCCCCCCCCCCCCCCCCCCCCCCAAAAAAAAAAAAAAAAAAATTTTTTTTTTTTTGGGGGGGGGGGGGGGGGGGGGGGGGGC' 
+
+#Problem 1
+def nt_60(dna):  
+  dna_60 = re.sub(r'(\w{1,60})',r'\1\n',dna)
+  return(dna_60)
+  
+def wrap_nt(dna):
+  nt_strings = re.findall("\w{1,60}",dna)
+  [print(x) for x in nt_strings]
+  return(nt_strings)
+
+
+print('This is wrap_nt:',wrap_nt(dna_INPUT))
+print('This is nt_60:',nt_60(dna_INPUT))
+#dna_input = sys.argv[1]
+#print(nt_60(dna_input))
+
+#dna = 'ATCGAATGCAGCGATACAGCATGCATGCATGCATCGACATCGATCGATCGATGATCGATCGATCGATCGATCGATCATCGATCTATTTTTAAAAAAAAATTTTTTTGGGAAAAAAAAACCCCCCCCCCCCGCAGTCAGTGACGTGACGTGAGCTAGTACGTGAGCTGTCAGCGATGACGTGAT'
+
