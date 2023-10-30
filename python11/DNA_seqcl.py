@@ -24,7 +24,7 @@ class DNA_recs(object):
     a_count = self.sequence('A')
     t_count = self.sequence('T')
     g_count = self.sequence('G')
-
+    c_count = self.sequence('C')
 #creating new record objects
 dnaR1 = DNA_recs('GATTACGACTAGA','silly_gene','piper')
 dnaR2 = DNA_recs('GATACGACGACTA','cute_gene','abby')

@@ -1,0 +1,15 @@
+
+Found perl:
+   /usr/bin/perl
+   This is perl 5, version 18, subversion 4 (v5.18.4) built for darwin-thread-multi-2level
+
+Found java:
+   /usr/bin/java
+   java version "11.0.19" 2023-04-18 LTS
+
+Found canu:
+   /Users/pfb11/problemsets/genome-assembly/canu-2.2/bin/canu
+   canu 2.2
+
+Running job 1 based on command line options.
+/Users/pfb11/problemsets/genome-assembly/ecoli-pacbio-75/unitigging/4-unitigger

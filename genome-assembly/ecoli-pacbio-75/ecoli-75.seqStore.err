@@ -1,0 +1,31 @@
+
+Found perl:
+   /usr/bin/perl
+   This is perl 5, version 18, subversion 4 (v5.18.4) built for darwin-thread-multi-2level
+
+Found java:
+   /usr/bin/java
+   java version "11.0.19" 2023-04-18 LTS
+
+Found canu:
+   /Users/pfb11/problemsets/genome-assembly/canu-2.2/bin/canu
+   canu 2.2
+
+
+Creating library 'filtered_0.75' for PacBio raw reads.
+
+               reads               bases
+---------- --------- ------ ------------ ------
+Loaded          9424  95.7%     87459672  99.7%  /Users/pfb11/problemsets/genome-assembly/filtered_0.75.fastq
+Short            419   4.3%       240019   0.3%
+
+
+All reads processed.
+
+               reads               bases
+---------- --------- ------ ------------ ------
+Loaded          9424  95.7%     87459672  99.7%
+Short            419   4.3%       240019   0.3%
+
+
+Bye.

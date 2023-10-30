@@ -1,0 +1,200 @@
+-- canu 2.2
+--
+-- CITATIONS
+--
+-- For 'standard' assemblies of PacBio or Nanopore reads:
+--   Koren S, Walenz BP, Berlin K, Miller JR, Phillippy AM.
+--   Canu: scalable and accurate long-read assembly via adaptive k-mer weighting and repeat separation.
+--   Genome Res. 2017 May;27(5):722-736.
+--   http://doi.org/10.1101/gr.215087.116
+-- 
+-- Read and contig alignments during correction and consensus use:
+--   Šošic M, Šikic M.
+--   Edlib: a C/C ++ library for fast, exact sequence alignment using edit distance.
+--   Bioinformatics. 2017 May 1;33(9):1394-1395.
+--   http://doi.org/10.1093/bioinformatics/btw753
+-- 
+-- Overlaps are generated using:
+--   Berlin K, et al.
+--   Assembling large genomes with single-molecule sequencing and locality-sensitive hashing.
+--   Nat Biotechnol. 2015 Jun;33(6):623-30.
+--   http://doi.org/10.1038/nbt.3238
+-- 
+--   Myers EW, et al.
+--   A Whole-Genome Assembly of Drosophila.
+--   Science. 2000 Mar 24;287(5461):2196-204.
+--   http://doi.org/10.1126/science.287.5461.2196
+-- 
+-- Corrected read consensus sequences are generated using an algorithm derived from FALCON-sense:
+--   Chin CS, et al.
+--   Phased diploid genome assembly with single-molecule real-time sequencing.
+--   Nat Methods. 2016 Dec;13(12):1050-1054.
+--   http://doi.org/10.1038/nmeth.4035
+-- 
+-- Contig consensus sequences are generated using an algorithm derived from pbdagcon:
+--   Chin CS, et al.
+--   Nonhybrid, finished microbial genome assemblies from long-read SMRT sequencing data.
+--   Nat Methods. 2013 Jun;10(6):563-9
+--   http://doi.org/10.1038/nmeth.2474
+-- 
+-- CONFIGURE CANU
+--
+-- Detected Java(TM) Runtime Environment '11.0.19' (from 'java') without -d64 support.
+--
+-- WARNING:
+-- WARNING:  Failed to run gnuplot using command 'gnuplot'.
+-- WARNING:  Plots will be disabled.
+-- WARNING:
+--
+--
+-- Detected 8 CPUs and 16 gigabytes of memory on the local machine.
+--
+-- Local machine mode enabled; grid support not detected or not allowed.
+--
+--                                (tag)Concurrency
+--                         (tag)Threads          |
+--                (tag)Memory         |          |
+--        (tag)             |         |          |       total usage      algorithm
+--        -------  ----------  --------   --------  --------------------  -----------------------------
+-- Local: meryl      8.000 GB    4 CPUs x   2 jobs    16.000 GB   8 CPUs  (k-mer counting)
+-- Local: hap        8.000 GB    4 CPUs x   2 jobs    16.000 GB   8 CPUs  (read-to-haplotype assignment)
+-- Local: cormhap    6.000 GB    8 CPUs x   1 job      6.000 GB   8 CPUs  (overlap detection with mhap)
+-- Local: obtovl     4.000 GB    8 CPUs x   1 job      4.000 GB   8 CPUs  (overlap detection)
+-- Local: utgovl     4.000 GB    8 CPUs x   1 job      4.000 GB   8 CPUs  (overlap detection)
+-- Local: cor        -.--- GB    4 CPUs x   - jobs     -.--- GB   - CPUs  (read correction)
+-- Local: ovb        4.000 GB    1 CPU  x   4 jobs    16.000 GB   4 CPUs  (overlap store bucketizer)
+-- Local: ovs        8.000 GB    1 CPU  x   2 jobs    16.000 GB   2 CPUs  (overlap store sorting)
+-- Local: red        8.000 GB    4 CPUs x   2 jobs    16.000 GB   8 CPUs  (read error detection)
+-- Local: oea        8.000 GB    1 CPU  x   2 jobs    16.000 GB   2 CPUs  (overlap error adjustment)
+-- Local: bat       16.000 GB    4 CPUs x   1 job     16.000 GB   4 CPUs  (contig construction with bogart)
+-- Local: cns        -.--- GB    4 CPUs x   - jobs     -.--- GB   - CPUs  (consensus)
+--
+-- Found untrimmed raw PacBio CLR reads in the input files.
+--
+-- Generating assembly 'ecoli' in '/Users/pfb11/problemsets/genome-assembly/ecoli-pacbio':
+--   genomeSize:
+--     4800000
+--
+--   Overlap Generation Limits:
+--     corOvlErrorRate 0.2400 ( 24.00%)
+--     obtOvlErrorRate 0.0450 (  4.50%)
+--     utgOvlErrorRate 0.0450 (  4.50%)
+--
+--   Overlap Processing Limits:
+--     corErrorRate    0.2500 ( 25.00%)
+--     obtErrorRate    0.0450 (  4.50%)
+--     utgErrorRate    0.0450 (  4.50%)
+--     cnsErrorRate    0.0750 (  7.50%)
+--
+--   Stages to run:
+--     correct raw reads.
+--     trim corrected reads.
+--     assemble corrected and trimmed reads.
+--
+--
+-- BEGIN CORRECTION
+----------------------------------------
+-- Starting command on Mon Oct 23 16:43:39 2023 with 885.292 GB free disk space
+
+    cd .
+    ./ecoli.seqStore.sh \
+    > ./ecoli.seqStore.err 2>&1
+
+-- Finished on Mon Oct 23 16:43:41 2023 (2 seconds) with 885.261 GB free disk space
+----------------------------------------
+--
+-- In sequence store './ecoli.seqStore':
+--   Found 12528 reads.
+--   Found 115899341 bases (24.14 times coverage).
+--    Histogram of raw reads:
+--    
+--    G=115899341                        sum of  ||               length     num
+--    NG         length     index       lengths  ||                range    seqs
+--    ----- ------------ --------- ------------  ||  ------------------- -------
+--    00010        23681       418     11594726  ||       1000-1825         1198|---------------------------------------------------------------
+--    00020        20608       945     23192500  ||       1826-2651         1140|------------------------------------------------------------
+--    00030        18475      1538     34784396  ||       2652-3477          960|---------------------------------------------------
+--    00040        16351      2204     46367255  ||       3478-4303          779|-----------------------------------------
+--    00050        14192      2965     57962265  ||       4304-5129          627|---------------------------------
+--    00060        11977      3852     69544809  ||       5130-5955          553|------------------------------
+--    00070         9852      4915     81135925  ||       5956-6781          491|--------------------------
+--    00080         7623      6248     92726509  ||       6782-7607          519|----------------------------
+--    00090         4728      8143    104313913  ||       7608-8433          535|-----------------------------
+--    00100         1000     12527    115899341  ||       8434-9259          494|--------------------------
+--    001.000x               12528    115899341  ||       9260-10085         431|-----------------------
+--                                               ||      10086-10911         438|------------------------
+--                                               ||      10912-11737         396|---------------------
+--                                               ||      11738-12563         371|--------------------
+--                                               ||      12564-13389         311|-----------------
+--                                               ||      13390-14215         327|------------------
+--                                               ||      14216-15041         305|-----------------
+--                                               ||      15042-15867         291|----------------
+--                                               ||      15868-16693         269|---------------
+--                                               ||      16694-17519         263|--------------
+--                                               ||      17520-18345         255|--------------
+--                                               ||      18346-19171         230|-------------
+--                                               ||      19172-19997         231|-------------
+--                                               ||      19998-20823         216|------------
+--                                               ||      20824-21649         166|---------
+--                                               ||      21650-22475         138|--------
+--                                               ||      22476-23301         117|-------
+--                                               ||      23302-24127         104|------
+--                                               ||      24128-24953          64|----
+--                                               ||      24954-25779          52|---
+--                                               ||      25780-26605          46|---
+--                                               ||      26606-27431          43|---
+--                                               ||      27432-28257          34|--
+--                                               ||      28258-29083          27|--
+--                                               ||      29084-29909          13|-
+--                                               ||      29910-30735          19|-
+--                                               ||      30736-31561          14|-
+--                                               ||      31562-32387          11|-
+--                                               ||      32388-33213           9|-
+--                                               ||      33214-34039           7|-
+--                                               ||      34040-34865           6|-
+--                                               ||      34866-35691           5|-
+--                                               ||      35692-36517          10|-
+--                                               ||      36518-37343           1|-
+--                                               ||      37344-38169           3|-
+--                                               ||      38170-38995           2|-
+--                                               ||      38996-39821           2|-
+--                                               ||      39822-40647           2|-
+--                                               ||      40648-41473           2|-
+--                                               ||      41474-42299           1|-
+--    
+----------------------------------------
+-- Starting command on Mon Oct 23 16:43:41 2023 with 885.261 GB free disk space
+
+    cd correction/0-mercounts
+    ./meryl-configure.sh \
+    > ./meryl-configure.err 2>&1
+
+-- Finished on Mon Oct 23 16:43:41 2023 (fast as lightning) with 885.261 GB free disk space
+----------------------------------------
+--  segments   memory batches
+--  -------- -------- -------
+--        01  0.30 GB       2
+--
+--  For 12528 reads with 115899341 bases, limit to 1 batch.
+--  Will count kmers using 01 jobs, each using 2 GB and 4 threads.
+--
+-- Finished stage 'merylConfigure', reset canuIteration.
+--
+-- Running jobs.  First attempt out of 2.
+----------------------------------------
+-- Starting 'meryl' concurrent execution on Mon Oct 23 16:43:41 2023 with 885.26 GB free disk space (1 processes; 2 concurrently)
+
+    cd correction/0-mercounts
+    ./meryl-count.sh 1 > ./meryl-count.000001.out 2>&1
+
+-- Finished on Mon Oct 23 16:43:51 2023 (10 seconds) with 884.838 GB free disk space
+----------------------------------------
+-- Found 1 Kmer counting (meryl) outputs.
+-- Finished stage 'cor-merylCountCheck', reset canuIteration.
+--
+-- Running jobs.  First attempt out of 2.
+----------------------------------------
+-- Starting 'meryl' concurrent execution on Mon Oct 23 16:43:51 2023 with 884.838 GB free disk space (1 processes; 2 concurrently)
+
+    cd correction/0-mercounts
+    ./meryl-process.sh 1 > ./meryl-process.000001.out 2>&1
