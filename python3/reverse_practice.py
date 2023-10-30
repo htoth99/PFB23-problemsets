@@ -5,8 +5,8 @@ dna = 'GATGGGATTGGGGTTTTCCCCTCCCATGTGCTCAAGACTGGCGCTAAAAGTTTTGAGCTTCTCAAAAGTCTAG
 
 dna2 = 'ATGCATCGACTCGACT'
 revdna2 = dna2[::-1]
-print(dna2)
-print(revdna2)
+#print(dna2)
+#print(revdna2)
 
 #I have to manually complement dna sequence
 
